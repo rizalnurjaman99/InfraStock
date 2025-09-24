@@ -17,7 +17,7 @@
     ],
     (object) [
       "title" => "Permintaan",
-      "path" => "#",
+      "path" => "/permintaan",
       "icon" => "fas fa-sign-out-alt",
     ],
     (object) [
