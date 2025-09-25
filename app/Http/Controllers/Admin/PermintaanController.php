@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Permintaan;
 use App\Product;
+use App\History;
+use Illuminate\Support\Facades\Auth;
 
 class PermintaanController extends Controller
 {
@@ -53,6 +55,12 @@ class PermintaanController extends Controller
 
         return redirect()->route('permintaan.index')
                          ->with('success', 'Berhasil membuat permintaan!');
+    
+        History::create([
+            'user' => Auth::user()->user_id,
+            'aktivitas' => 'Tambah Permintaan',
+            'deskripsi' => "Permintaan {$request->nama_barang} sebanyak {$request->qty} {$request->satuan}"
+        ]);
     }
 
     public function destroy($id)
@@ -62,5 +70,11 @@ class PermintaanController extends Controller
 
         return redirect()->route('permintaan.index')
                          ->with('success', 'Permintaan berhasil dihapus dan stock di-update.');
+    
+        History::create([
+            'user' => Auth::user()->user_id,
+            'aktivitas' => 'Hapus Permintaan',
+            'deskripsi' => "Permintaan {$request->nama_barang} sebanyak {$request->qty} {$request->satuan}"
+        ]);
     }
 }

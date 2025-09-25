@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\BarangMasuk;
 use App\Product;
 use App\Category;
+use App\History;
+use Illuminate\Support\Facades\Auth;
 
 class BarangMasukController extends Controller
 {
@@ -35,6 +37,7 @@ class BarangMasukController extends Controller
         $hargaTotal  = $request->harga_total;
 
         // Simpan ke tabel barang_masuk (history)
+ 
         BarangMasuk::create([
             'no_pemasukan' => $noPemasukan,
             'nama_barang'  => $namaBarang,
@@ -65,5 +68,12 @@ class BarangMasukController extends Controller
         }
 
         return redirect()->route('barangmasuk.create')->with('success', 'Barang masuk berhasil ditambahkan.');
+
+
+        History::create([
+            'user' => Auth::user()->user_id,
+            'aktivitas' => 'Tambah Barang Masuk',
+            'deskripsi' => "Menambahkan barang {$request->nama_barang} sebanyak {$request->stock} {$request->satuan}"
+        ]);    
     }
 }

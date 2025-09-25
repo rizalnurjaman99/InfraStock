@@ -22,12 +22,12 @@
     ],
     (object) [
       "title" => "Returan",
-      "path" => "#",
+      "path" => "/returan",
       "icon" => "fas fa-retweet",
     ],
     (object) [
       "title" => "History",
-      "path" => "#",
+      "path" => "/history",
       "icon" => "fas fa-history",
     ],
   ]
