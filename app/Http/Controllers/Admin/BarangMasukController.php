@@ -3,77 +3,53 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\BarangMasuk;
 use App\Product;
 use App\Category;
-use App\History;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BarangMasukController extends Controller
 {
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::all(); // ✅ kirim data kategori ke form
         return view('pages.barang-masuk.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'no_pemasukan' => 'nullable|string|max:50',
-            'nama_barang'  => 'required|string|max:255',
-            'category_id'  => 'required|exists:categories,id',
-            'stock'        => 'required|integer|min:1',
-            'satuan'       => 'required|string|max:50',
-            'harga_total'  => 'required|numeric|min:0',
+            'no_pemasukan' => 'required|string',
+            'nama_barang' => 'required|string',
+            'category_id' => 'required|integer',
+            'stock' => 'required|integer|min:1',
+            'satuan' => 'required|string',
+            'harga_total' => 'required|numeric',
         ]);
 
-        $noPemasukan = $request->no_pemasukan;
-        $namaBarang  = $request->nama_barang;
-        $categoryId  = $request->category_id;
-        $stockTambah = $request->stock;
-        $satuan      = $request->satuan;
-        $hargaTotal  = $request->harga_total;
-
-        // Simpan ke tabel barang_masuk (history)
- 
+        // Simpan ke tabel barang-masuk
         BarangMasuk::create([
-            'no_pemasukan' => $noPemasukan,
-            'nama_barang'  => $namaBarang,
-            'category_id'  => $categoryId,
-            'stock'        => $stockTambah,
-            'satuan'       => $satuan,
-            'harga_total'  => $hargaTotal,
+            'no_pemasukan' => $request->no_pemasukan,
+            'nama_barang' => $request->nama_barang,
+            'category_id' => $request->category_id,
+            'stock' => $request->stock,
+            'satuan' => $request->satuan,
+            'harga_total' => $request->harga_total,
+            'created_by' => Auth::user()->name ?? 'Unknown',
         ]);
 
-        // Update / Create produk di tabel products
-        $product = Product::where('nama_barang', $namaBarang)
-                          ->where('category_id', $categoryId)
-                          ->first();
+        // Update ke tabel products
+        $product = Product::firstOrNew([
+            'nama_barang' => $request->nama_barang,
+            'category_id' => $request->category_id,
+        ]);
 
-        if ($product) {
-            $product->stock += $stockTambah;
-            $product->harga_total += $hargaTotal;
-            $product->save();
-        } else {
-            Product::create([
-                'no_pemasukan' => $noPemasukan,
-                'nama_barang'  => $namaBarang,
-                'category_id'  => $categoryId,
-                'stock'        => $stockTambah,
-                'satuan'       => $satuan,
-                'harga_total'  => $hargaTotal,
-            ]);
-        }
+        $product->stock += $request->stock;
+        $product->satuan = $request->satuan;
+        $product->harga_total += $request->harga_total;
+        $product->save();
 
-        return redirect()->route('barangmasuk.create')->with('success', 'Barang masuk berhasil ditambahkan.');
-
-
-        History::create([
-            'user' => Auth::user()->user_id,
-            'aktivitas' => 'Tambah Barang Masuk',
-            'deskripsi' => "Menambahkan barang {$request->nama_barang} sebanyak {$request->stock} {$request->satuan}"
-        ]);    
+        return redirect()->route('barangmasuk.create')->with('success', 'Barang berhasil ditambahkan');
     }
 }

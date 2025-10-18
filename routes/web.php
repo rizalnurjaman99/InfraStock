@@ -17,7 +17,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware([IsLogin::class])->group(function ()
 {   
     //Dashboard Data Induk
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard') ->middleware(IsLogin::class);
+    Route::get('/', [App\Http\Controllers\Admin\ProductController::class, 'index'])->name('dashboard');
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/create', [ProductController::class, 'create']);
     Route::post('/products/store', [ProductController::class, 'store']);
@@ -34,18 +34,17 @@ Route::middleware([IsLogin::class])->group(function ()
     Route::post('/barang-masuk', [BarangMasukController::class, 'store'])->name('barangmasuk.store');
     
     //Permintaan
-    Route::get('/permintaan', [PermintaanController::class, 'index'])->name('permintaan.index');
+    Route::get('/permintaan', [App\Http\Controllers\Admin\PermintaanController::class, 'index'])->name('permintaan');
     Route::get('/permintaan/create', [PermintaanController::class, 'create'])->name('permintaan.create');
     Route::post('/permintaan', [PermintaanController::class, 'store'])->name('permintaan.store');
     Route::delete('/permintaan/{id}', [PermintaanController::class, 'destroy'])->name('permintaan.destroy');
 
-    Route::get('/returan', [ReturanController::class, 'index'])->name('returan.index');
+    Route::get('/returan', [App\Http\Controllers\Admin\ReturanController::class, 'index'])->name('returan');
     Route::get('/returan/create', [ReturanController::class, 'create'])->name('returan.create');
     Route::post('/returan', [ReturanController::class, 'store'])->name('returan.store');
     Route::delete('/returan/{id}', [ReturanController::class, 'destroy'])->name('returan.destroy');
 
-    Route::get('/history', [App\Http\Controllers\Admin\HistoryController::class, 'index'])
-    ->name('history.index');
+    Route::get('/history', [App\Http\Controllers\Admin\HistoryController::class, 'index'])->name('history');
 
 });
 Route::fallback(function () {

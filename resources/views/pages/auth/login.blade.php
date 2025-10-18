@@ -58,12 +58,6 @@
         </div>
       </form>
 
-      <p class="mb-1">
-        <a href="forgot-password.html">Lupa Password</a>
-      </p>
-      <p class="mb-0">
-        <a href="register.html" class="text-center">Daftar Baru</a>
-      </p>
     </div>
     <!-- /.login-card-body -->
   </div>

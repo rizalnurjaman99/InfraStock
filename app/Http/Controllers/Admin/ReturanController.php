@@ -12,10 +12,19 @@ use Illuminate\Support\Facades\Auth;
 
 class ReturanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $returan = Returan::latest()->paginate(10);
-        return view('pages.returan.index', compact('returan'));
+         $search = $request->input('search');
+
+        $returan = Returan::when($search, function ($query, $search) {
+            $query->where('no_permintaan', 'like', "%$search%")
+                  ->orWhere('nama_barang', 'like', "%$search%");
+            })
+            ->orderBy('nama_barang', 'asc')
+            ->paginate(15)
+            ->appends(['search' => $search]);
+
+        return view('pages.returan.index', compact('returan', 'search'));
     }
 
     public function create()

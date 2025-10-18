@@ -11,14 +11,13 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('no_pemasukan')->nullable(); 
-            $table->string('nama_barang');             
-            $table->unsignedBigInteger('category_id');
+            $table->string('nama_barang');      
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('category_name')->nullable();
             $table->integer('stock');
             $table->string('satuan');
             $table->decimal('harga_total', 15, 2);
-            $table->timestamps();
-
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->timestamps();            
         });
     }
 

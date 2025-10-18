@@ -1,0 +1,23 @@
+[33mcommit 9a3e3003e9dd6a7216dfdf3aaa223fc378a38dad[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Jalee <rizalnurjaman99@gmail.com>
+Date:   Thu Oct 16 13:29:18 2025 +0700
+
+    settingan chat GPT ini mah, tapi masih banyak error
+
+[33mcommit c2951e2b5b5be6910cde751e7819342922a91641[m
+Author: Jalee <rizalnurjaman99@gmail.com>
+Date:   Thu Sep 25 15:21:01 2025 +0700
+
+    Menambah Returan
+
+[33mcommit eea74fea1df8caefd2df4ffe611794238fe083c6[m
+Author: Jalee <rizalnurjaman99@gmail.com>
+Date:   Wed Sep 24 16:43:38 2025 +0700
+
+    Menambah Permintaan
+
+[33mcommit 2ccd8c1d5f00b685b1dd5ae5e59055e2e1c0b377[m
+Author: Jalee <rizalnurjaman99@gmail.com>
+Date:   Wed Sep 24 15:25:12 2025 +0700
+
+    first commit Dashboard, Kategori, Barang Masuk

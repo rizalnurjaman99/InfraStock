@@ -6,11 +6,6 @@
       "icon" => "fas fa-home",
     ],
     (object) [
-      "title" => "Kategori",
-      "path" => "categories",
-      "icon" => "fas fa-th",
-    ],
-    (object) [
       "title" => "Barang Masuk",
       "path" => "barang-masuk",
       "icon" => "fas fa-shopping-cart",
